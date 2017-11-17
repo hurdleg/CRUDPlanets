@@ -24,6 +24,7 @@ public class MyService extends IntentService {
 
     public static final String MY_SERVICE_MESSAGE = "myServiceMessage";
     public static final String MY_SERVICE_PAYLOAD = "myServicePayload";
+    public static final String MY_SERVICE_RESPONSE = "myServiceResponse";
     public static final String MY_SERVICE_EXCEPTION = "myServiceException";
     public static final String REQUEST_PACKAGE = "requestPackage";
 
@@ -48,11 +49,22 @@ public class MyService extends IntentService {
             return;
         }
 
-        Gson gson = new Gson();
-        PlanetPOJO[] planetsArray = gson.fromJson(response, PlanetPOJO[].class);
-
         Intent messageIntent = new Intent(MY_SERVICE_MESSAGE);
-        messageIntent.putExtra(MY_SERVICE_PAYLOAD, planetsArray);
+        Gson gson = new Gson();
+        switch (requestPackage.getMethod()) {
+            case GET:
+                PlanetPOJO[] planetsArray = gson.fromJson(response, PlanetPOJO[].class);
+                messageIntent.putExtra(MY_SERVICE_PAYLOAD, planetsArray);
+                break;
+
+            case POST:
+            case PUT:
+            case DELETE:
+                PlanetPOJO planetArray = gson.fromJson(response, PlanetPOJO.class);
+                messageIntent.putExtra(MY_SERVICE_RESPONSE,
+                        requestPackage.getMethod() + ": " + planetArray.getName());
+                break;
+        }
         LocalBroadcastManager manager =
                 LocalBroadcastManager.getInstance(getApplicationContext());
         manager.sendBroadcast(messageIntent);

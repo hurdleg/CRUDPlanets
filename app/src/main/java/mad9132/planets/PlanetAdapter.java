@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import mad9132.planets.model.PlanetPOJO;
 
@@ -23,12 +24,12 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.ViewHolder
 
     private static final String PHOTOS_BASE_URL = "https://planets.mybluemix.net/planets/";
 
-    private Context              mContext;
-    private List<PlanetPOJO>     mPlanets;
+    private Context               mContext;
+    private ArrayList<PlanetPOJO> mPlanets;
 
-    public PlanetAdapter(Context context, List<PlanetPOJO> planets) {
+    public PlanetAdapter(Context context) {
         this.mContext = context;
-        this.mPlanets = planets;
+        this.mPlanets = new ArrayList<>(8);
     }
 
     @Override
@@ -46,6 +47,9 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.ViewHolder
         holder.tvName.setText(aPlanet.getName());
 
         String url = PHOTOS_BASE_URL + aPlanet.getPlanetId() + "/image";
+        // force picasso to fetch the planet's image from the internet, and not use the cache
+        // handles the case when the photo for Pluto is updated
+        Picasso.with(mContext).invalidate(url);
         Picasso.with(mContext)
                 .load(url)
                 .fit()
@@ -64,6 +68,12 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mPlanets.size();
+    }
+
+    public void setPlanets(PlanetPOJO[] planetsArray) {
+        mPlanets.clear();
+        mPlanets.addAll(new ArrayList<>(Arrays.asList(planetsArray)));
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

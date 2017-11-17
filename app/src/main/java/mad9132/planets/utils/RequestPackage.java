@@ -21,7 +21,8 @@ import java.util.Map;
 public class RequestPackage implements Parcelable {
 
     private String endPoint;
-    private String method = "GET";
+    // TODO #2 - change datatype to HttpMethod (was String)
+    private HttpMethod method = HttpMethod.GET;
     private Map<String, String> params = new HashMap<>();
 
     public String getEndpoint() {
@@ -32,11 +33,11 @@ public class RequestPackage implements Parcelable {
         this.endPoint = endPoint;
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(HttpMethod method) {
         this.method = method;
     }
 
@@ -78,7 +79,7 @@ public class RequestPackage implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.endPoint);
-        dest.writeString(this.method);
+        dest.writeString(this.method.toString());
         dest.writeInt(this.params.size());
         for (Map.Entry<String, String> entry : this.params.entrySet()) {
             dest.writeString(entry.getKey());
@@ -91,7 +92,7 @@ public class RequestPackage implements Parcelable {
 
     protected RequestPackage(Parcel in) {
         this.endPoint = in.readString();
-        this.method = in.readString();
+        this.method = HttpMethod.valueOf(in.readString());
         int paramsSize = in.readInt();
         this.params = new HashMap<String, String>(paramsSize);
         for (int i = 0; i < paramsSize; i++) {

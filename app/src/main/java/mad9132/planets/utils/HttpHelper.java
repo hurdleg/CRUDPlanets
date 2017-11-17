@@ -3,10 +3,13 @@ package mad9132.planets.utils;
 import android.support.annotation.NonNull;
 import android.util.Base64;
 
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -42,7 +45,7 @@ public class HttpHelper {
         String address = requestPackage.getEndpoint();
         String encodedParams = requestPackage.getEncodedParams();
 
-        if (requestPackage.getMethod().equals("GET") &&
+        if (requestPackage.getMethod() == HttpMethod.GET &&
                 encodedParams.length() > 0) {
             address = String.format("%s?%s", address, encodedParams);
         }
@@ -64,8 +67,23 @@ public class HttpHelper {
             }
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
-            conn.setRequestMethod(requestPackage.getMethod());
+            conn.setRequestMethod(requestPackage.getMethod().toString());
             conn.setDoInput(true);
+            //TODO #3 - for POST and PUT: write-out the requestPackage params as the body of the Http request
+            JSONObject json = new JSONObject(requestPackage.getParams());
+            String params = json.toString();
+            if ( (requestPackage.getMethod() == HttpMethod.POST ||
+                    requestPackage.getMethod() == HttpMethod.PUT) &&
+                    params.length() > 0) {
+                // The web service expects the request body to be in JSON format.
+                conn.addRequestProperty("Accept", "application/json");
+                conn.addRequestProperty("Content-Type", "application/json");
+                conn.setDoInput(true);
+                OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+                writer.write(params);
+                writer.flush();
+                writer.close();
+            }
             conn.connect();
 
             int responseCode = conn.getResponseCode();
