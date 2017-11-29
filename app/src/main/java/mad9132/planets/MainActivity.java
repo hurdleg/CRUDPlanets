@@ -154,6 +154,9 @@ public class MainActivity extends Activity {
         // The web service requires values for *each* property (i.e. instance variable).
         pluto.setName( "Pluto" );
         pluto.setOverview( "I miss Pluto!" );
+        // web service hosts images/noimagefound.jpg
+        // The URL is http://planets.mybluemix.net/images/noimagefound.jpg
+        // set the image to relative path on web service
         pluto.setImage( "images/noimagefound.jpg" );
         pluto.setDescription( "Pluto was stripped of planet status :(" );
         pluto.setDistanceFromSun( 39.5f );

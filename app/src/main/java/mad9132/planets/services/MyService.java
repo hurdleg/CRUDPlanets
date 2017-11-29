@@ -60,9 +60,9 @@ public class MyService extends IntentService {
             case POST:
             case PUT:
             case DELETE:
-                PlanetPOJO planetArray = gson.fromJson(response, PlanetPOJO.class);
+                PlanetPOJO planet = gson.fromJson(response, PlanetPOJO.class);
                 messageIntent.putExtra(MY_SERVICE_RESPONSE,
-                        requestPackage.getMethod() + ": " + planetArray.getName());
+                        requestPackage.getMethod() + ": " + planet.getName());
                 break;
         }
         LocalBroadcastManager manager =

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CRUD</string>
+    <string name="app_name">Planets (CRUD)</string>
     <string name="get_data">1. Fetch Planets</string>
     <string name="post_data">2. Create a new Planet (Pluto)</string>
     <string name="put_data">3. Update Pluto to hurdleg</string>
