@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,8 +49,12 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.ViewHolder
         holder.tvName.setText(aPlanet.getName());
 
         String url = PHOTOS_BASE_URL + aPlanet.getPlanetId() + "/image";
+        // force picasso to fetch the planet's image from the internet, and not use the cache
+        // handles the case when the image for Pluto is updated
         Picasso.with(mContext)
                 .load(url)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .error(R.drawable.noimagefound)
                 .fit()
                 .into(holder.imageView);
