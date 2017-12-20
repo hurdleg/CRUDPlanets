@@ -133,6 +133,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    // TODO - HTTP POST /planets
     /**
      * Create a new planet on the web service named: Pluto
      *
@@ -180,6 +181,7 @@ public class MainActivity extends Activity {
         Log.i(TAG, "createPlanetPluto(): " + pluto.getName());
     }
 
+    // TODO - HTTP DELETE /planets/:id
     /**
      * Delete a planet that does not exist.
      *
@@ -216,6 +218,7 @@ public class MainActivity extends Activity {
         Log.i(TAG, "deletePlanetPluto() Id: 8");
     }
 
+    // TODO - HTTP GET /planets
     /**
      * Fetch the planet data from the web service.
      *
@@ -233,6 +236,7 @@ public class MainActivity extends Activity {
         Log.i(TAG, "getPlanets()");
     }
 
+    // TODO - HTTP PUT /planets/:id
     /**
      * Update (rename) planet Pluto to hurdleg
      *
