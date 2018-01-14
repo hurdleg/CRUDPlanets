@@ -171,8 +171,8 @@ public class MainActivity extends Activity {
         requestPackage.setParam("overview", pluto.getOverview() );
         requestPackage.setParam("image", pluto.getImage() );
         requestPackage.setParam("description", pluto.getDescription() );
-        requestPackage.setParam("distance_from_sun", pluto.getDistanceFromSun() + "");
-        requestPackage.setParam("number_of_moons", pluto.getNumberOfMoons() + "" );
+        requestPackage.setParam("distanceFromSun", pluto.getDistanceFromSun() + "");
+        requestPackage.setParam("numberOfMoons", pluto.getNumberOfMoons() + "" );
 
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra(MyService.REQUEST_PACKAGE, requestPackage);
@@ -266,8 +266,8 @@ public class MainActivity extends Activity {
         requestPackage.setParam("overview", pluto.getOverview() );
         requestPackage.setParam("image", pluto.getImage() );
         requestPackage.setParam("description", pluto.getDescription() );
-        requestPackage.setParam("distance_from_sun", pluto.getDistanceFromSun() + "");
-        requestPackage.setParam("number_of_moons", pluto.getNumberOfMoons() + "" );
+        requestPackage.setParam("distanceFromSun", pluto.getDistanceFromSun() + "");
+        requestPackage.setParam("numberOfMoons", pluto.getNumberOfMoons() + "" );
 
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra(MyService.REQUEST_PACKAGE, requestPackage);
