@@ -33,7 +33,7 @@
 
   Available from GitHub:
 
-  https://github.com/hurdleg/CRUD.git
+  <https://github.com/hurdleg/CRUD.git>
 
 ## Reference ##
 
